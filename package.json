@@ -1,0 +1,19 @@
+{
+  "name": "exceptional-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.3.1",
+    "eris": "^0.17.2",
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.4.1",
+    "node-cron": "^3.0.2"
+  }
+}
