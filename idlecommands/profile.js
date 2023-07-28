@@ -37,7 +37,7 @@ module.exports.run = async (bot, us, msg) => {
         let cooldown = General.calc_energy_cooldown(us);
         let time = parseInt(diff * cooldown);
         let timestamp = Date.now() + (time * 1000);
-        energy.energyFull = timestamp;
+        energy.energyFull = parseInt(timestamp);
         energy.active = true;
         energy.channel = msg.channel.id;
         energy.save().catch(err=>console.log(err));
