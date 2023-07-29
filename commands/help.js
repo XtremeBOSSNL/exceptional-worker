@@ -27,6 +27,7 @@ module.exports.run = async (bot, msg, args) => {
         `\`ew settings\` Configure the settings you want to use in the bot\n` +
         `\`ew energy\` Configure your Energy Reminder\n` +
         `\`ew claim\` Configure your Claim Reminder\n` +
+        `\`ew raid\` Configure Your Raid Helper\n` + 
         `\`ew lastclaim\` Shows how long ago you've claimed\n`
       }
     )

@@ -8,6 +8,8 @@ const dataSchema = mongoose.Schema({
         energyReminder: { type:Boolean, default:false},
         energyReminderTreshold: { type:Number, default:100},
         raidHelper: {type: Boolean, default:false},
+        raidSimpleMode: {type: Boolean, default:false},
+        raidWorkerEmoji: {type: Boolean, default:true},
         showLastClaim: {type: Boolean, default:false},
         claimReminder: {type: Boolean, default:false}
     },

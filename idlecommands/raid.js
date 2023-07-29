@@ -6,7 +6,8 @@ const RaidSolutions = require('../models/raidSolution');
 
 const worker_data = require('../data/workers.json').workers;
 
-const type_to_name = ['None','useless','deficient','common','talented','wise','expert','masterful']; 
+const type_to_name = ['None','useless','deficient','common','talented','wise','expert','masterful'];
+const type_to_letter = ['?','U','D','C','T','W','E','M'];
 
 module.exports.run = async (bot, us, msg) => {
     let embed = msg.embeds[0];
@@ -103,40 +104,51 @@ module.exports.run = async (bot, us, msg) => {
       solution.save().catch(err=>console.log(err));
     }
 
-    let string = "";
+    if (us.settings.raidSimpleMode) {
+      let string = "";
+      for (let i = 0;i < solution.best_solution.length;i++) {
+        string += `${us.settings.raidWorkerEmoji ? worker_data[type_to_name[solution.best_solution[i].type]].emoji : type_to_letter[solution.best_solution[i].type] } `;
+      }
+      const newEmbed = new Discord.EmbedBuilder()
+        .setDescription(`This solution clears ${solution.best_score} farms\n` + string)
+        .setFooter({text:'Empty farms are not included in the cleared farm count'});
+      msg.reply({embeds:[newEmbed]});
+    } else {
+      let string = "";
 
-    for (let i = 0; i < Math.max(enemys.length, solution.best_solution.length);i++) {
-      let a = solution.best_solution[i];
-      let d = enemys[i];
-      
-      if (a?.type) {
-        let power = get_power(a.type, a.level).toFixed(2);
-        string += `${worker_data[type_to_name[a.type]].emoji} ${power > 9 ? power : `0${power}`} 💥 `;
-      } else {
-        string += `⬛ 00.00 💥 `;
+      for (let i = 0; i < Math.max(enemys.length, solution.best_solution.length);i++) {
+        let a = solution.best_solution[i];
+        let d = enemys[i];
+        
+        if (a?.type) {
+          let power = get_power(a.type, a.level).toFixed(2);
+          string += `${us.settings.raidWorkerEmoji ? worker_data[type_to_name[a.type]].emoji : type_to_letter[a.type]} ${power > 9 ? power : `0${power}`} 💥 `;
+        } else {
+          string += `⬛ 00.00 💥 `;
+        }
+
+        if (d?.type) {
+          let power = get_power(d.type, d.level).toFixed(2);
+          string += `${us.settings.raidWorkerEmoji ? worker_data[type_to_name[d.type]].emoji : type_to_letter[d.type]} ${power > 9 ? power : `0${power}`} :shield:`;
+        } else {
+          string += `⬛ 00.00 :shield:`;
+        }
+        string += '\n';
       }
 
-      if (d?.type) {
-        let power = get_power(d.type, d.level).toFixed(2);
-        string += `${worker_data[type_to_name[d.type]].emoji} ${power > 9 ? power : `0${power}`} :shield:`;
-      } else {
-        string += `⬛ 00.00 :shield:`;
-      }
-      string += '\n';
-    }
+      const newEmbed = new Discord.EmbedBuilder()
+        .setDescription(`This solution clears ${solution.best_score} farms`)
+        .addFields(
+          {
+              name:`Attacker/Defender`,
+              value:string,
+              inline:true,
+          },
+        )
+        .setFooter({text:'Empty farms are not included in the cleared farm count'});
 
-    const newEmbed = new Discord.EmbedBuilder()
-      .setDescription(`This solution clears ${solution.best_score} farms`)
-      .addFields(
-        {
-            name:`Attacker/Defender`,
-            value:string,
-            inline:true,
-        },
-      )
-      .setFooter({text:'Empty farms are not included in the cleared farm count'});
-
-    msg.reply({embeds:[newEmbed]});
+      msg.reply({embeds:[newEmbed]});
+  }
 }
 
 function get_worker_string(workers) {

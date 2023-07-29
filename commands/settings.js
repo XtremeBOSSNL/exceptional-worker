@@ -112,6 +112,7 @@ function make_embed(us, expired) {
         `\`ew energy\` to configure your energy regen\n` +
         `**Raid Helper:** ${us.settings.raidHelper ? 'On' : 'Off'}\n` +
         `\`idle wo\` so the bot can see your workers\n`+
+        `\`ew raid\` to configure the embed the helper provides \n` +
         `**Claim Reminder:** ${us.settings.claimReminder ? 'On' : 'Off'}\n` +
         `\`ew claim\` to configure your claim reminder\n`
     );
