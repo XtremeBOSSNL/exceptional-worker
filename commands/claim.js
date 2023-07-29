@@ -108,8 +108,8 @@ function make_embed(us, claim, expired) {
   const newEmbed = new Discord.EmbedBuilder()
     .setTitle('Claim Overview')
     .setDescription(`Reminder Set: ${us.data.lastClaimHours ? `${us.data.lastClaimHours} Hours` : 'No Time set'}\n` +
-      `Reminder Scheduled for: ${claim_string ? `<t:${claim_string}:R>` : "Unkown"}\n` +
-      `Last Energy Claim: ${last_claim_string ? `<t:${last_claim_string}:R>` : "Unkown"}`
+      `Reminder Scheduled for: ${claim_string ? `<t:${claim_string}:R>` : "Unknown"}\n` +
+      `Last Energy Claim: ${last_claim_string ? `<t:${last_claim_string}:R>` : "Unknown"}`
     );
 
   if (expired) newEmbed.setColor(Discord.Colors.Red);

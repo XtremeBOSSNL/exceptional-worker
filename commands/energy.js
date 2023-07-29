@@ -135,7 +135,7 @@ function make_embed(us, energy, expired) {
     .setDescription(`Donor Tier: ${donor_tiers[us.data.donorTier]}\n` +
       `Regen Upgrade: ${energy_upgrades[us.data.energyRegenUpgrade]}\n` +
       `Energy Cooldown: ${General.calc_energy_cooldown_display(us)}\n` +
-      `Energy Full in: ${energy_string ? `<t:${energy_string}:R>` : "Unkown"}`
+      `Energy Full in: ${energy_string ? `<t:${energy_string}:R>` : "Unknown"}`
     );
 
   if (expired) newEmbed.setColor(Discord.Colors.Red);
