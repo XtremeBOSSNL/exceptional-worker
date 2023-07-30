@@ -34,11 +34,13 @@ class Raid {
     atk
     def
     current_defender
+    max_hp
 
     constructor(atk, def, hp) {
         this.atk = atk.map(x => new Worker(x.type, x.level));
         this.def = def.map(x => new Farm(hp, new Worker(x.type, x.level)));
         this.current_defender = 0;
+        this.max_hp = hp;
     }
 
     simulate() {
@@ -53,13 +55,14 @@ class Raid {
                 this.current_defender++;
             }
         }
-        return this.current_defender;
+        return [this.current_defender, this.def[this.current_defender]?.hp || 0];
     }
 }
 
 class RaidSolver {
     best_solution
     best_score
+    best_hp_left
     hp
     atk
     def
@@ -91,22 +94,19 @@ class RaidSolver {
         
         permute(this.atk)
 
-        return [this.best_score, this.best_solution, this.stats];
+        return [this.best_score, this.best_solution, this.best_hp_left, this.stats];
     }
 
     doRaid(atk) {
         let raid = new Raid(atk, this.def, this.hp);
         let score = raid.simulate();
         this.stats.count++;
-        this.stats[score] = (this.stats[score] || 0) + 1;
-        if (score > this.best_score) {
+        this.stats[score[0].toFixed(0)] = (this.stats[score[0].toFixed(0)] || 0) + 1;
+        if ((score[0] == this.best_score && score[1] < this.best_hp_left) || (score[0] > this.best_score)) {
             this.best_solution = atk;
-            this.best_score = score;
+            this.best_score = score[0];
+            this.best_hp_left = score[1];
         }
-        if (this.best_score == this.def.length) {
-            return true;
-        }
-        return false;
     }
 }
 

@@ -99,7 +99,8 @@ module.exports.run = async (bot, us, msg) => {
         farmlife: farmlife,
         best_score: stats[0],
         best_solution: stats[1],
-        stats: stats[2],
+        best_hp_left: stats[2],
+        stats: stats[3],
       });
       solution.save().catch(err=>console.log(err));
     }
@@ -110,7 +111,7 @@ module.exports.run = async (bot, us, msg) => {
         string += `${us.settings.raidWorkerEmoji ? worker_data[type_to_name[solution.best_solution[i].type]].emoji : type_to_letter[solution.best_solution[i].type] } `;
       }
       const newEmbed = new Discord.EmbedBuilder()
-        .setDescription(`This solution clears ${solution.best_score} farms\n` + string)
+        .setDescription(`This solution clears ${solution.best_score} farms ${solution.best_hp_left ? `with the next at ${solution.best_hp_left}hp left` : ''}\n` + string)
         .setFooter({text:'Empty farms are not included in the cleared farm count'});
       msg.reply({embeds:[newEmbed]});
     } else {
@@ -137,7 +138,7 @@ module.exports.run = async (bot, us, msg) => {
       }
 
       const newEmbed = new Discord.EmbedBuilder()
-        .setDescription(`This solution clears ${solution.best_score} farms`)
+        .setDescription(`This solution clears ${solution.best_score} farms ${solution.best_hp_left ? `with the next at ${solution.best_hp_left}hp left` : ''}`)
         .addFields(
           {
               name:`Attacker/Defender`,
