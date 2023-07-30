@@ -74,6 +74,7 @@ class RaidSolver {
         this.def = def;
         this.best_score = 0;
         this.best_solution = [];
+        this.best_hp_left = hp;
         this.stats = {
             count: 0,
         };
