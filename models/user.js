@@ -11,7 +11,8 @@ const dataSchema = mongoose.Schema({
         raidSimpleMode: {type: Boolean, default:false},
         raidWorkerEmoji: {type: Boolean, default:true},
         showLastClaim: {type: Boolean, default:false},
-        claimReminder: {type: Boolean, default:false}
+        claimReminder: {type: Boolean, default:false},
+        trackHire: {type: Boolean, default:false},
     },
     data: {
         lastClaim: { type: Number, default: 0 },

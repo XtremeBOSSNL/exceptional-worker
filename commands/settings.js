@@ -39,6 +39,14 @@ module.exports.run = async (bot, msg, args) => {
           us.settings.claimReminder = false;
           us.save().catch(err=>console.log(err));
           i.reply({content:`Succesfully turned claim reminder off`, ephemeral: true});
+      } else if (i.customId == 'settings-hire-on') {
+          us.settings.trackHire = true;
+          us.save().catch(err=>console.log(err));
+          i.reply({content:`Succesfully turned hire tracker on`, ephemeral: true});
+      } else if (i.customId == 'settings-hire-off') {
+          us.settings.trackHire = false;
+          us.save().catch(err=>console.log(err));
+          i.reply({content:`Succesfully turned hire tracker off`, ephemeral: true});
       }
     }
     await response.edit(make_embed(us));
@@ -106,6 +114,22 @@ function make_embed(us, expired) {
     )
   }
 
+  if (us.settings.trackHire) {
+    row1.addComponents(
+        new Discord.ButtonBuilder()
+        .setLabel('Turn Hire Tracker Off')
+        .setCustomId('settings-hire-off')
+        .setStyle(Discord.ButtonStyle.Danger)
+    )
+  } else {
+    row1.addComponents(
+        new Discord.ButtonBuilder()
+        .setLabel('Turn Hire Tracker On')
+        .setCustomId('settings-hire-on')
+        .setStyle(Discord.ButtonStyle.Success)
+    )
+  }
+
   const newEmbed = new Discord.EmbedBuilder()
     .setTitle('Settings Overview')
     .setDescription(`**Energy Reminder:** ${us.settings.energyReminder ? 'On' : 'Off'}\n` +
@@ -114,7 +138,9 @@ function make_embed(us, expired) {
         `\`idle wo\` so the bot can see your workers\n`+
         `\`ew raid\` to configure the embed the helper provides \n` +
         `**Claim Reminder:** ${us.settings.claimReminder ? 'On' : 'Off'}\n` +
-        `\`ew claim\` to configure your claim reminder\n`
+        `\`ew claim\` to configure your claim reminder\n` +
+        `**Hire Tracker:** ${us.settings.trackHire ? 'On' : 'Off'}\n` +
+        `\`ew hire\` to see your hire stats\n`
     );
 
   if (expired) newEmbed.setColor(Discord.Colors.Red);
