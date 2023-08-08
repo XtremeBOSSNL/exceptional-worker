@@ -13,18 +13,33 @@ module.exports = {
   },
 };
 
-
-
-
-
-
 async function idle_handler(bot, msg) {
   let embed = msg.embeds[0];
   if (!embed) return;
 
   let url = embed.data?.author?.icon_url;
-  if (!url) return;
-  if (!url.startsWith('https://cdn.discordapp.com/avatars/')) return;
+  if (!url) {
+    let descr = embed.data?.description;
+    if (!descr) return;
+    if (descr.startsWith('This is the **idle market**!')) {
+      let command;
+      let cmd = 'market';
+
+      if (bot.idlecommands.has(cmd)) {
+        command = bot.idlecommands.get(cmd);
+      }
+
+      try {
+        command.run(bot, {}, msg);
+      } catch (e) {
+        return;
+      }
+      return;
+    } else {
+      return;
+    }
+  };
+  if (url && !url.startsWith('https://cdn.discordapp.com/avatars/')) return;
   url = url.slice("https://cdn.discordapp.com/avatars/".length);
   let index = url.indexOf('/');
   let id = url.substring(0, index);

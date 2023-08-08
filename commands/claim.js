@@ -91,7 +91,7 @@ function make_embed(us, claim, expired) {
         .setValue('12'),
         new Discord.StringSelectMenuOptionBuilder()
         .setLabel('18 Hours')
-        .setDescription('Be Reminded 16 Hours after claiming')
+        .setDescription('Be Reminded 18 Hours after claiming')
         .setValue('18'),
         new Discord.StringSelectMenuOptionBuilder()
         .setLabel('24 Hours')

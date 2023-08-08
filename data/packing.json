@@ -1,0 +1,31 @@
+{
+    "boxes": {
+        "wood":4600,
+        "stick":7300,
+        "apple":13600,
+        "leaf":18100,
+        "water":6400,
+        "rock":7300,
+        "sand":5950,
+        "algae":17200,
+        "potato":6400,
+        "dirt":1900,
+        "root":9100,
+        "wheat":5950,
+        "seed":10000,
+        "bug":22600,
+        "broken_bottle":16300,
+        "gold_nugget":63100,
+        "cotton":9100,
+        "coal":5500,
+        "iron_ore":10000,
+        "copper_ore":10450,
+        "dust":1900,
+        "aluminium_ore":13600,
+        "milk":21700,
+        "meat":36100,
+        "leather":50500,
+        "horn":72100,
+        "sawdust":6400
+    }
+}
