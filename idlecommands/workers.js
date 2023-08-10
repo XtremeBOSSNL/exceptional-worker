@@ -6,8 +6,6 @@ const worker_data = require('../data/workers.json').workers;
 
 module.exports.run = async (bot, us, msg) => {
     let embed = msg.embeds[0];
-    
-    if (us.settings.raidHelper == false) return; 
 
     let worker = await Workers.findOne({ user:us.user }).exec();
     if (!worker) {
@@ -28,6 +26,9 @@ module.exports.run = async (bot, us, msg) => {
       worker[wname] = level;
     });
     worker.save().catch(err=>console.log(err));
+    us.data.lastWorkerCheck = Date.now();
+    us.save().catch(err=>console.log(err));
+    if (us.settings.raidHelper == false) return;
     msg.react('<:CheckMark:1011588182149697556>');
 }
 

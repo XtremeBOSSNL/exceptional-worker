@@ -23,8 +23,14 @@ async function idle_handler(bot, msg) {
   if (!embed) return;
 
   let url = embed.data?.author?.icon_url;
-  if (!url) return;
-  if (!url.startsWith('https://cdn.discordapp.com/avatars/')) return;
+  if (!url) {
+    let footer = embed.data?.footer?.text;
+    if (footer && footer.startsWith('Owner: ')) {
+      bot.idlecommands.get('guild list').run(bot, undefined, msg);
+    }
+    return;
+  };
+  if (url && !url.startsWith('https://cdn.discordapp.com/avatars/')) return;
   url = url.slice("https://cdn.discordapp.com/avatars/".length);
   let index = url.indexOf('/');
   let id = url.substring(0, index);

@@ -30,7 +30,8 @@ module.exports.run = async (bot, msg, args) => {
         `\`ew raid\` Configure Your Raid Helper\n` + 
         `\`ew lastclaim\` Shows how long ago you've claimed\n` +
         `\`ew hire\` Shows your worker roll stats\n` +
-        `\`ew info\` Shows some info about the bot\n`
+        `\`ew info\` Shows some info about the bot\n` +
+        `\`ew guild\` Shows guild commands for guild owners\n`
       }
     )
   
