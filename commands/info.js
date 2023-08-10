@@ -27,7 +27,12 @@ module.exports.run = async (bot, msg, args) => {
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1134098983397101618&permissions=137439332416&scope=bot%20applications.commands')
       .setStyle(Discord.ButtonStyle.Link)
   )
-
+  row1.addComponents(
+    new Discord.ButtonBuilder()
+    .setLabel('Join Support Server')
+    .setURL('https://discord.gg/Ksw8YaPhjF')
+    .setStyle(Discord.ButtonStyle.Link)
+  )
   const newEmbed = new Discord.EmbedBuilder()
     .setTitle('Info')
     .addFields(
