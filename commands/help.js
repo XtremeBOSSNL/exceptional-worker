@@ -37,6 +37,10 @@ module.exports.run = async (bot, msg, args) => {
         `\`ew hire\` Shows your worker roll stats\n` +
         `\`ew info\` Shows some info about the bot\n` +
         `\`ew guild\` Shows guild commands for guild owners\n`
+      },
+      {
+        name:"Info",
+        value:`[Terms of Service](https://github.com/XtremeBOSSNL/ExceptionalWorker)\n[Privacy Polivy](https://github.com/XtremeBOSSNL/ExceptionalWorker)`
       }
     )
   
