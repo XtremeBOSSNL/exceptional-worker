@@ -88,13 +88,13 @@ async function check_req(bot, guild, msg, args) {
           good.push(m);
         } else {
           if (string_c.length > 900) {
-            string_d += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${g_m.data.lastWorkerCheck}:R>` : 'Unknown' }\n`;
+            string_d += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
           } else if (string_b.length > 900) {
-            string_c += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${g_m.data.lastWorkerCheck}:R>` : 'Unknown' }\n`;
+            string_c += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
           } else if (string.length > 900) {
-            string_b += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${g_m.data.lastWorkerCheck}:R>` : 'Unknown' }\n`;
+            string_b += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
           } else {
-            string += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${g_m.data.lastWorkerCheck}:R>` : 'Unknown' }\n`;
+            string += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
           }
         }
       } else {
