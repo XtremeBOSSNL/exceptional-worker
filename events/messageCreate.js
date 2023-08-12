@@ -31,11 +31,6 @@ module.exports = {
   },
 };
 
-
-
-
-
-
 async function idle_handler(bot, msg) {
   let embed = msg.embeds[0];
   if (!embed) return;
