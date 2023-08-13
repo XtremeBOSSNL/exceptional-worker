@@ -227,7 +227,7 @@ async function team_raid(bot, us, msg) {
   let embed = msg.embeds[0];
 
   let enemyOrder = [];
-  for (let i = 0; i < embed.fields.length-1;i++) {
+  for (let i = 0; i < embed.fields.length;i++) {
     let field = embed.fields[i];
 
     let farmlife = /\s`(\d+)\/(\d+)/g.exec(field.value)?.[2] || 100;
