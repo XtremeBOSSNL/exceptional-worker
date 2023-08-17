@@ -81,7 +81,7 @@ module.exports.run = async (bot, us, msg) => {
     }
 
     let enemys = get_order(value, enemy);
-    if (!enemys.length) return msg.reply({content:`No enemies found. if this is not only empty farms please report this with a screenshot`});
+    if (!enemys.length) return msg.reply({content:`No enemies found. if this is not only empty farms please report this with a screenshot\nhttps://discord.gg/Ksw8YaPhjF`});
 
     let enemyString = get_worker_string(enemys);
     let attackerString = get_worker_string(attacker);

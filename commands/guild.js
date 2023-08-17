@@ -106,11 +106,16 @@ async function check_req(bot, guild, msg, args) {
   }
 
   let met_string = '';
+  let met_string2 = '';
   let not_reg_string = '';
   let no_worker_string = '';
 
   good.forEach(x => {
-    met_string += `<@${x}> `;
+    if (met_string.length > 900) {
+      met_string2 += `<@${x}> `;
+    } else {
+      met_string += `<@${x}> `;
+    }
   });
   not_registered.forEach(x => {
     not_reg_string += `<@${x}> `;
@@ -129,6 +134,14 @@ async function check_req(bot, guild, msg, args) {
       {
         name:`Met requirements`,
         value:met_string,
+      }
+    )
+  }
+  if (met_string2) {
+    newEmbed.addFields(
+      {
+        name:`Met requirements 2`,
+        value:met_string2,
       }
     )
   }
@@ -216,10 +229,15 @@ async function check_life(bot, guild, msg, args) {
   }
 
   let met_string = '';
+  let met_string2 = '';
   let not_reg_string = '';
 
   good.forEach(x => {
-    met_string += `<@${x}> `;
+    if (met_string.length > 900) {
+      met_string2 += `<@${x}> `;
+    } else {
+      met_string += `<@${x}> `;
+    }
   });
   not_registered.forEach(x => {
     not_reg_string += `<@${x}> `;
@@ -234,6 +252,14 @@ async function check_life(bot, guild, msg, args) {
       {
         name:`Met requirements`,
         value:met_string,
+      }
+    )
+  }
+  if (met_string2) {
+    newEmbed.addFields(
+      {
+        name:`Met requirements 2`,
+        value:met_string2,
       }
     )
   }
