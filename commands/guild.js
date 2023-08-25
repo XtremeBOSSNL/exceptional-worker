@@ -22,18 +22,18 @@ module.exports.run = async (bot, msg, args) => {
     case "setpower":
       set_power_req(bot, guild, msg, args);
       break;
-    case "setlife":
-      life(bot, guild, msg, args);
-      break;
+    // case "setlife":
+    //   life(bot, guild, msg, args);
+    //   break;
     case "check":
       check_req(bot, guild, msg, args);
       break;
     case "delete":
       delete_data(bot, guild, msg, args);
       break;
-    case "life":
-      check_life(bot, guild, msg, args);
-      break;
+    // case "life":
+    //   check_life(bot, guild, msg, args);
+    //   break;
     default:
       guild_help(bot, guild, msg, args);
       break;

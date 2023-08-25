@@ -41,48 +41,56 @@ module.exports.run = async (bot, us, msg) => {
         attacker.push({
             type:7,
             level: worker.masterful,
+            power:get_power(7, worker.masterful),
         });
     }
     if (worker.expert) {
         attacker.push({
           type:6,
           level: worker.expert,
+          power:get_power(6, worker.expert),
         });
     }
     if (worker.wise) {
         attacker.push({
           type:5,
           level: worker.wise,
+          power:get_power(5, worker.wise),
         });
     }
     if (worker.talented) {
         attacker.push({
           type:4,
           level: worker.talented,
+          power:get_power(4, worker.talented),
         });
     }
     if (worker.common) {
         attacker.push({
           type:3,
           level: worker.common,
+          power:get_power(3, worker.common),
         });
     }
     if (worker.deficient) {
         attacker.push({
           type:2,
           level: worker.deficient,
+          power:get_power(2, worker.deficient),
         });
     }
     if (worker.useless) {
         attacker.push({
           type:1,
           level: worker.useless,
+          power:get_power(1, worker.useless),
         });
     }
 
     let enemys = get_order(value, enemy);
     if (!enemys.length) return msg.reply({content:`No enemies found. if this is not only empty farms please report this with a screenshot\nhttps://discord.gg/Ksw8YaPhjF`});
 
+    attacker = max_6_attackers(attacker);
     let enemyString = get_worker_string(enemys);
     let attackerString = get_worker_string(attacker);
 
@@ -373,6 +381,14 @@ function minimal_kill_power (type, level, life) {
   let dmg = life-0.49;
   let needed_power = (dmg * power) / 100;
   return needed_power;
+}
+
+function max_6_attackers (attackers) {
+  attackers.sort((a,b) => { return b.power - a.power; });
+  while (attackers.length >= 7) {
+    attackers.pop();
+  }
+  return attackers;
 }
 
 module.exports.help = {

@@ -23,7 +23,7 @@ class Farm {
     }
 
     takeDmg(power) {
-        let dmg = Math.round(100 * power / (this.worker?.power || 1));
+        let dmg = Math.round(80 * power / (this.worker?.power || 1));
         this.hp -= dmg;
         if (this.hp < 0) this.hp = 0;
         return this.hp;
