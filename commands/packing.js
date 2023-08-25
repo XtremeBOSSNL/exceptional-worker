@@ -101,8 +101,8 @@ function make_data(market) {
     obj.name = mat;
     obj.cost = market.material[mat] * 100;
     obj.sell = packing_data[mat];
-    obj.regProfit = (obj.sell * 0.8) - obj.cost;
-    obj.donorProfit = (obj.sell * 0.9) - obj.cost;
+    obj.regProfit = (obj.sell * 0.9) - obj.cost;
+    obj.donorProfit = (obj.sell * 0.95) - obj.cost;
     array.push(obj);
   });
   return array;
