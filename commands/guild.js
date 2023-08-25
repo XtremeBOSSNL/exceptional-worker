@@ -22,18 +22,18 @@ module.exports.run = async (bot, msg, args) => {
     case "setpower":
       set_power_req(bot, guild, msg, args);
       break;
-    // case "setlife":
-    //   life(bot, guild, msg, args);
-    //   break;
+    case "setlife":
+      life(bot, guild, msg, args);
+      break;
     case "check":
       check_req(bot, guild, msg, args);
       break;
     case "delete":
       delete_data(bot, guild, msg, args);
       break;
-    // case "life":
-    //   check_life(bot, guild, msg, args);
-    //   break;
+    case "life":
+      check_life(bot, guild, msg, args);
+      break;
     default:
       guild_help(bot, guild, msg, args);
       break;
@@ -374,8 +374,8 @@ function guild_help(bot, guild, msg, args) {
         value:`\`ew guild\` Shows this help command\n` +
         `\`ew guild setpower <Number 0-500>\` Set the power requirement\n` +
         `\`ew guild check\` Check if power requirements have been met\n` +
-        // `\`ew guild setlife <Number 0-3>\` Set the farm life upgrade requirement\n` +
-        // `\`ew guild life\` Check if farm life requirements have been met\n` +
+        `\`ew guild setlife <Number 0-3>\` Set the farm life upgrade requirement\n` +
+        `\`ew guild life\` Check if farm life requirements have been met\n` +
         `\`ew guild delete\` Delete outdated guild data\n`
       }
     )
