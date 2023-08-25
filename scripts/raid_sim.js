@@ -28,6 +28,18 @@ const attackers = [
     {
         type:7,
         level:2,
+    },
+    {
+        type:7,
+        level:2,
+    },
+    {
+        type:7,
+        level:2,
+    },
+    {
+        type:7,
+        level:2,
     }
 ]
 

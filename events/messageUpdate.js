@@ -19,6 +19,10 @@ async function idle_handler(bot, msg) {
 
   let url = embed.data?.author?.icon_url;
   if (!url) {
+    let footer = embed.data?.footer?.text;
+    if (footer && footer.startsWith('Owner: ')) {
+      bot.idlecommands.get('guild list').run(bot, undefined, msg);
+    }
     let descr = embed.data?.description;
     if (!descr) return;
     if (descr.startsWith('This is the **idle market**!')) {

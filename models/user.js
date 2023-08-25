@@ -18,6 +18,8 @@ const dataSchema = mongoose.Schema({
         lastClaim: { type: Number, default: 0 },
         lastClaimHours: {type: Number, default: 0 },
         lastRaidpoints: { type: Number, default: 0 },
+        lastWorkerCheck: {type: Number, default: 0},
+        farmLife: {type: Number, default: 0},
         donorTier: { type:Number, default: 0},
         energyRegenUpgrade: {type:Number, default:0},
     },

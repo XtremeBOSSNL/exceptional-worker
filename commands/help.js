@@ -17,7 +17,12 @@ module.exports.run = async (bot, msg, args) => {
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1134098983397101618&permissions=137439332416&scope=bot%20applications.commands')
       .setStyle(Discord.ButtonStyle.Link)
   )
-
+  row1.addComponents(
+    new Discord.ButtonBuilder()
+    .setLabel('Join Support Server')
+    .setURL('https://discord.gg/Ksw8YaPhjF')
+    .setStyle(Discord.ButtonStyle.Link)
+  )
   const newEmbed = new Discord.EmbedBuilder()
     .setTitle('Help')
     .addFields(
@@ -31,7 +36,12 @@ module.exports.run = async (bot, msg, args) => {
         `\`ew lastclaim\` Shows how long ago you've claimed\n` +
         `\`ew hire\` Shows your worker roll stats\n` +
         `\`ew packing\` Shows packing profit\n` +
-        `\`ew info\` Shows some info about the bot\n`
+        `\`ew info\` Shows some info about the bot\n` +
+        `\`ew guild\` Shows guild commands for guild owners\n`
+      },
+      {
+        name:"Info",
+        value:`[Terms of Service](https://github.com/XtremeBOSSNL/ExceptionalWorker)\n[Privacy Polivy](https://github.com/XtremeBOSSNL/ExceptionalWorker)`
       }
     )
   
