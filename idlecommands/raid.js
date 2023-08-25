@@ -379,7 +379,7 @@ function get_min_order (value, enemy, farmLife) {
 function minimal_kill_power (type, level, life) {
   let power = get_power(type, level);
   let dmg = life-0.49;
-  let needed_power = (dmg * power) / 95;
+  let needed_power = (dmg * power) / 100;
   return needed_power;
 }
 
