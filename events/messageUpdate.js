@@ -13,11 +13,6 @@ module.exports = {
   },
 };
 
-
-
-
-
-
 async function idle_handler(bot, msg) {
   let embed = msg.embeds[0];
   if (!embed) return;
@@ -28,7 +23,25 @@ async function idle_handler(bot, msg) {
     if (footer && footer.startsWith('Owner: ')) {
       bot.idlecommands.get('guild list').run(bot, undefined, msg);
     }
-    return;
+    let descr = embed.data?.description;
+    if (!descr) return;
+    if (descr.startsWith('This is the **idle market**!')) {
+      let command;
+      let cmd = 'market';
+
+      if (bot.idlecommands.has(cmd)) {
+        command = bot.idlecommands.get(cmd);
+      }
+
+      try {
+        command.run(bot, {}, msg);
+      } catch (e) {
+        return;
+      }
+      return;
+    } else {
+      return;
+    }
   };
   if (url && !url.startsWith('https://cdn.discordapp.com/avatars/')) return;
   url = url.slice("https://cdn.discordapp.com/avatars/".length);
