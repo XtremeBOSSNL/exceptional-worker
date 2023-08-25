@@ -374,8 +374,8 @@ function guild_help(bot, guild, msg, args) {
         value:`\`ew guild\` Shows this help command\n` +
         `\`ew guild setpower <Number 0-500>\` Set the power requirement\n` +
         `\`ew guild check\` Check if power requirements have been met\n` +
-        `\`ew guild setlife <Number 0-3>\` Set the farm life upgrade requirement\n` +
-        `\`ew guild life\` Check if farm life requirements have been met\n` +
+        // `\`ew guild setlife <Number 0-3>\` Set the farm life upgrade requirement\n` +
+        // `\`ew guild life\` Check if farm life requirements have been met\n` +
         `\`ew guild delete\` Delete outdated guild data\n`
       }
     )
