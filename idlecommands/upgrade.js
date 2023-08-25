@@ -7,6 +7,8 @@ const worker_data = require('../data/workers.json').workers;
 module.exports.run = async (bot, us, msg) => {
     let embed = msg.embeds[0];
 
+
+    return;
     let farmLife = 0;
     for(let i = 0; i < embed.fields.length;i++) {
         if (embed.fields[i].value.includes('farm life')) {
