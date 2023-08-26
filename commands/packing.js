@@ -21,6 +21,7 @@ module.exports.run = async (bot, msg, args) => {
 
   let market = await Market.findOne({day:day,month:month,year:year}).exec();
   if (!market) return msg.reply({ content: `Market data is not known for today. use \`idle market\` and go through all material pages` });
+  if (check_market_data_missing(market)) return msg.reply({ content: `Market data is not known for today. use \`idle market\` and go through all material pages` });
 
   let emb = make_embeds(market);
   const regEmbed = make_global_embed(emb[0], 0);
@@ -119,4 +120,15 @@ function make_embed(market, data, donor) {
     .setDescription(`**Profit Per Worker Token**\n${string}`)
     .setFooter({text:`Data from ${market.day}-${market.month+1}-${market.year} UTC`});
   return newEmbed;
+}
+
+function check_market_data_missing (market) {
+  let missing = 0;
+  all_materials.forEach(mats => {
+    if (market.material[mats] == 0) {
+      missing++;
+    }
+  })
+
+  return missing ? true : false;
 }

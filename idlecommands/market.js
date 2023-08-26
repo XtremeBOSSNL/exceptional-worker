@@ -30,7 +30,10 @@ module.exports.run = async (bot, us, msg) => {
     if (!fitems) return;
 
     fitems.forEach(item => {
-        let name = />\s\*\*(.+)\*\*/g.exec(item.name)?.[1] || '';
+        let name = />\s\*\*(.+)\*\*$/g.exec(item.name)?.[1] || ''
+        if (!name) {
+            name = />\s\*\*(.+)\*\*\s\s\|/g.exec(item.name)?.[1] || '';
+        }
         name = name.replace(/ /g,"_");
         let price = /\*\*Price\*\*:\s(\d+)\s<:idlons:1086449232967372910>/g.exec(item.value)?.[1] || 0;
         // console.log(`${name}: ${price} idlons`);
