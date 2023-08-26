@@ -22,6 +22,7 @@ const dataSchema = mongoose.Schema({
         farmLife: {type: Number, default: 0},
         donorTier: { type:Number, default: 0},
         energyRegenUpgrade: {type:Number, default:0},
+        packingMulti: { type:Number, default:0},
     },
     info: {
         creation_date: { type: Date, default: Date.now() },
