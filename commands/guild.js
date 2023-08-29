@@ -77,6 +77,7 @@ async function check_req(bot, guild, msg, args) {
   let good = [];
   let not_registered = [];
   let no_workers = [];
+  let worker_data = [];
   for (let i = 0;i < members.length;i++) {
     let m = members[i];
     let g_m = guild_members.find(x => x.user == m);
@@ -87,15 +88,16 @@ async function check_req(bot, guild, msg, args) {
         if (power >= guild.power_req) {
           good.push(m);
         } else {
-          if (string_c.length > 900) {
-            string_d += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
-          } else if (string_b.length > 900) {
-            string_c += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
-          } else if (string.length > 900) {
-            string_b += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
-          } else {
-            string += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
-          }
+          worker_data.push(w_m);
+          // if (string_c.length > 900) {
+          //   string_d += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+          // } else if (string_b.length > 900) {
+          //   string_c += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+          // } else if (string.length > 900) {
+          //   string_b += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+          // } else {
+          //   string += `<@${m}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+          // }
         }
       } else {
         no_workers.push(m);
@@ -104,6 +106,22 @@ async function check_req(bot, guild, msg, args) {
       not_registered.push(m);
     }
   }
+
+  worker_data.sort((a,b) => { return check_top_power(b) - check_top_power(a)});
+  worker_data.forEach(w => {
+    let g_m = guild_members.find(x => x.user == w.user);
+    let power = check_top_power(w);
+    if (string_c.length > 900) {
+      string_d += `<@${w.user}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+    } else if (string_b.length > 900) {
+      string_c += `<@${w.user}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+    } else if (string.length > 900) {
+      string_b += `<@${w.user}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+    } else {
+      string += `<@${w.user}> Power: ${power.toFixed(2)}, Last Check: ${g_m.data.lastWorkerCheck ? `<t:${(g_m.data.lastWorkerCheck/1000).toFixed(0)}:R>` : 'Unknown' }\n`;
+    }
+  });
+
 
   let met_string = '';
   let met_string2 = '';
