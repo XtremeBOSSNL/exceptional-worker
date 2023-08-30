@@ -4,7 +4,7 @@ const Energy = require('../models/energy');
 const General = require('../modules/general');
 const Hire = require('../models/hire');
 
-module.exports.run = async (bot, us, msg) => {
+module.exports.run = async (bot, us, msg, oldMsg) => {
     let embed = msg.embeds[0];
 
     if (us.settings.trackHire == false) return;
@@ -16,10 +16,17 @@ module.exports.run = async (bot, us, msg) => {
         })
     }
 
-    if (msg.components[0].components[0].disabled) return;
-
     let fields = embed.fields;
     let name = fields[0].name;
+
+    if (oldMsg) {
+        let footer = embed?.footer?.text;
+        let oldfooter = oldMsg.embeds[0]?.footer?.text;
+        if (!footer || !oldfooter) return;
+        let energy = /Energy:\s(\d+)\/(\d+)/g.exec(footer)?.[1];
+        let oldenergy = /Energy:\s(\d+)\/(\d+)/g.exec(oldfooter)?.[1];
+        if (energy === oldenergy) return;
+    };
     
     let roll = {
         useless: /<a:uselessworker:1084589589437620475>/g.exec(name) ? 1 : 0,

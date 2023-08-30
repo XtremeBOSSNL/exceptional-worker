@@ -1,5 +1,6 @@
 require('dotenv').config();
 const User = require('../models/user');
+const General = require('../modules/general');
 
 const { Events } = require('discord.js');
 
@@ -36,11 +37,19 @@ async function idle_handler(bot, msg) {
   if (!embed) return;
 
   let url = embed.data?.author?.icon_url;
-  if (!url) return;
-  if (!url.startsWith('https://cdn.discordapp.com/avatars/')) return;
-  url = url.slice("https://cdn.discordapp.com/avatars/".length);
-  let index = url.indexOf('/');
-  let id = url.substring(0, index);
+  let author = embed.data?.author?.name;
+  let id;
+  if (url && !url.startsWith('https://cdn.discordapp.com/avatars/')) {
+    url = url.slice("https://cdn.discordapp.com/avatars/".length);
+    let index = url.indexOf('/');
+    id = url.substring(0, index);
+  } else if (author) {
+    let member = General.get_member_by_username(msg.guild, author, 1);
+    if (member?.user?.id) {
+      id = member.user.id;
+    }
+  }
+  if (!id) return;
 
   let us = await User.findOne({ user: id }).exec();
   if (!us) return;

@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Discord = require('discord.js');
 const Guilds = require('../models/guild');
 const Workers = require('../models/worker');
+const worker = require('../models/worker');
 
 module.exports.run = async (bot, msg, args) => {
   let userid = msg.author.id;
@@ -33,6 +34,9 @@ module.exports.run = async (bot, msg, args) => {
       break;
     case "life":
       check_life(bot, guild, msg, args);
+      break;
+    case "power":
+      power_embed(bot, guild, msg, args);
       break;
     default:
       guild_help(bot, guild, msg, args);
@@ -382,6 +386,112 @@ async function delete_data(bot, guild, msg, args) {
   msg.reply({content:`Guild data deleted, Please do \`idle guild list\` to load the new data`});
 }
 
+async function power_embed(bot, guild, msg, args) {
+  let members = guild.members;
+
+  let guild_members = await User.find({user:{$in:members}}).exec();
+  let guild_workers = await Workers.find({user:{$in:members}}).exec();
+
+
+  let min = 999;
+  let max = 0;
+  let total = 0;
+  let amount = 0;
+  let not_registered = [];
+  let not_reg_string = '';
+  let no_workers = [];
+  let no_worker_string = '';
+  
+  let workers = [];
+  for (let i = 0;i < members.length;i++) {
+    let m = members[i];
+    let g_m = guild_members.find(x => x.user == m);
+    if (g_m) {
+      let w_m = guild_workers.find(x => x.user == m);
+      if (w_m) {
+        let power = check_top_power(w_m);
+        amount++;
+        total += power;
+        if (power > max) {
+          max = power;
+        }
+        if (power < min) {
+          min = power;
+        }
+        workers.push({
+          user:w_m.user,
+          power:power,
+        });
+      } else {
+        no_workers.push(m);
+      }
+    } else {
+      no_workers.push(m);
+    }
+  }
+
+  workers.sort((a,b) => { return b.power - a.power });
+
+  no_workers.forEach(x => {
+    no_worker_string += `<@${x}> `;
+  })
+  not_registered.forEach(x => {
+    not_reg_string += `<@${x}> `;
+  })
+
+  const newEmbed = new Discord.EmbedBuilder()
+    .setTitle("Guild Power")
+    .setDescription(`Power Req: 💥${guild.power_req}\n` +
+      `Power Range: 💥${max.toFixed(2)}-💥${min.toFixed(2)}\n` +
+      `Power Average: 💥${(total/amount).toFixed(2)}`
+    );
+
+  let string = '';
+  let number = 1;
+  while (workers.length) {
+    let p = workers.shift();
+    if (string.length > 900) {
+      newEmbed.addFields(
+        {
+          name:`Top Power ${number}`,
+          value:string,
+        }
+      )
+      string = '';
+      number++;
+    }
+    string += `💥 **${p.power.toFixed(2)}** - <@${p.user}>\n`;
+  }
+
+  if (string) {
+    newEmbed.addFields(
+      {
+        name:`Top Power ${number}`,
+        value:string,
+      }
+    )
+  }
+
+  if (no_worker_string) {
+    newEmbed.addFields(
+      {
+        name:`No Worker data known`,
+        value:no_worker_string,
+      }
+    )
+  }
+  if (not_reg_string) {
+    newEmbed.addFields(
+      {
+        name:`Not Registered with EW`,
+        value:not_reg_string,
+      }
+    )
+  }
+
+  msg.reply({embeds:[newEmbed]});
+
+}
 
 function guild_help(bot, guild, msg, args) {
   const newEmbed = new Discord.EmbedBuilder()
@@ -394,6 +504,7 @@ function guild_help(bot, guild, msg, args) {
         `\`ew guild check\` Check if power requirements have been met\n` +
         `\`ew guild setlife <Number 0-3>\` Set the farm life upgrade requirement\n` +
         `\`ew guild life\` Check if farm life requirements have been met\n` +
+        `\`ew guild power\` Check power of your guild members\n` +
         `\`ew guild delete\` Delete outdated guild data\n`
       }
     )

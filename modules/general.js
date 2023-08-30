@@ -1,6 +1,7 @@
 
 const Energy = require('../models/energy');
 const Claim = require('../models/claim');
+const { Collection } = require('mongoose');
 
 const donor_energy = [1,1.1,1.3,1.55];
 const upgrade_energy = [1,1.2,1.35,1.5,1.6,1.7,1.75,1.8];
@@ -55,4 +56,16 @@ async function claim_check (bot) {
   return;
 }
 
-module.exports = {calc_energy_cooldown, calc_energy_cooldown_display, energy_check, claim_check}
+async function get_member_by_username(guild, username, strict) {
+  let members = await guild.members.fetch({query:username, limit:99}).catch(err=>console.log(err));
+  let member = strict ? undefined : members.first();
+  if (strict || members.size > 1) {
+    let found = members.find(x => x.user.username === username);
+    if (found) {
+      member = found;
+    }
+  }
+  return member;
+}
+
+module.exports = {calc_energy_cooldown, calc_energy_cooldown_display, energy_check, claim_check, get_member_by_username}

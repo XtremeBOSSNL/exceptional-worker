@@ -41,8 +41,8 @@ module.exports.run = async (bot, us, msg) => {
                 members.push(id);
             } else {
                 let after = /\*\*(.+)\*\*/g.exec(m[ii])[1];
-                let me = await msg.guild.members.fetch({query:after, limit:1}).catch(err=>console.log(err));
-                members.push(me.first().user.id);
+                let me = await General.get_member_by_username(msg.guild, after);
+                members.push(me.user.id);
             }
         }
     }
@@ -65,7 +65,7 @@ module.exports.run = async (bot, us, msg) => {
     
     // console.log(members);
     g.members = members;
-    g.save().catch(err=>console.log(err));
+    // g.save().catch(err=>console.log(err));
     msg.react('<:CheckMark:1011588182149697556>');
 }
 

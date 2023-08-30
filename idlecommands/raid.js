@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const Workers = require('../models/worker');
 const { RaidSolver } = require('../modules/raid');
 const RaidSolutions = require('../models/raidSolution');
+const General = require('../modules/general');
 
 const worker_data = require('../data/workers.json').workers;
 
@@ -258,9 +259,9 @@ async function team_raid(bot, us, msg) {
   for(let i = 1; i < msg.components.length;i++) {
     let row = msg.components[i];
     let name = row.components[0].data.label;
-    let u = await msg.guild.members.fetch({query:name, limit:1}).catch(err=>console.log(err));
-    if (u.first().user?.id) {
-      players.push(u.first().user.id);
+    let u = await General.get_member_by_username(msg.guild, name);
+    if (u?.user?.id) {
+      players.push(u.user.id);
     } else {
       players.push(`Couldnt find ${name}`);
     }
