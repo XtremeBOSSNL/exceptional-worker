@@ -65,7 +65,7 @@ module.exports.run = async (bot, us, msg) => {
     
     // console.log(members);
     g.members = members;
-    // g.save().catch(err=>console.log(err));
+    g.save().catch(err=>console.log(err));
     msg.react('<:CheckMark:1011588182149697556>');
 }
 
