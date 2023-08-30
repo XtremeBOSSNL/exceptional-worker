@@ -21,7 +21,7 @@ async function idle_handler(bot, msg, oldMsg) {
   let url = embed.data?.author?.icon_url;
   let author = embed.data?.author?.name;
   let id;
-  if (url && !url.startsWith('https://cdn.discordapp.com/avatars/')) {
+  if (url && url.startsWith('https://cdn.discordapp.com/avatars/')) {
     url = url.slice("https://cdn.discordapp.com/avatars/".length);
     let index = url.indexOf('/');
     id = url.substring(0, index);
