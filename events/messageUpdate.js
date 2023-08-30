@@ -25,11 +25,14 @@ async function idle_handler(bot, msg, oldMsg) {
     url = url.slice("https://cdn.discordapp.com/avatars/".length);
     let index = url.indexOf('/');
     id = url.substring(0, index);
-  // } else if (author) {
-  //   let member = General.get_member_by_username(msg.guild, author, 1);
-  //   if (member?.user?.id) {
-  //     id = member.user.id;
-  //   }
+  } else if (author) {
+    let name = /^(\w+)\s—\s/g.exec(author)?.[1] || undefined;
+    if (name) {
+      let member = General.get_member_by_username(msg.guild, author, 1);
+      if (member?.user?.id) {
+        id = member.user.id;
+      }
+    }
   } else {
     let footer = embed.data?.footer?.text;
     if (footer && footer.startsWith('Owner: ')) {
