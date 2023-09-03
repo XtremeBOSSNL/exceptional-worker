@@ -36,7 +36,12 @@ module.exports.run = async (bot, us, msg) => {
         }
         name = name.replace(/ /g,"_");
         let price = /\*\*Price\*\*:\s(\d+)\s<:idlons:1086449232967372910>/g.exec(item.value)?.[1] || 0;
-        // console.log(`${name}: ${price} idlons`);
+        if (!price) {
+            let search = /\*\*Price\*\*:\s(\d+),(\d+)\s<:idlons:1086449232967372910>/g.exec(item.value);
+            if (search && search[1] && search[2]) {
+                price = (parseInt(search[1]) * 1000) + parseInt(search[2]);
+            }
+        }
         if (filter.includes(name) && price) {
             market.material[name] = price;
         }
