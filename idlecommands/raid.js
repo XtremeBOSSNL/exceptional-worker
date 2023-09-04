@@ -13,6 +13,8 @@ const type_to_letter = ['?','U','D','C','T','W','E','M'];
 module.exports.run = async (bot, us, msg) => {
     let embed = msg.embeds[0];
 
+    if (us.settings.raidHelper == false) return;
+
     let teamraid = /farms!\s\(-80\s<:energy:1084593332312887396>\)$/g.exec(embed.description)?.index || 0;
     if (teamraid > 0) return team_raid(bot, us, msg);
     

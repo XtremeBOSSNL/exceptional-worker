@@ -82,7 +82,7 @@ module.exports.run = async (bot, msg, args) => {
 
   for(let i = 0;i < (args[0] && args[0].toLowerCase() === 'top' ? 3 : workers.length);i++) {
     let w = workers[i];
-    string += `${worker_data[type_to_name[w.type]].emoji} <:level:1139837622722777108> ${w.level} 💥 ${w.power.toFixed(2)}\n`;
+    string += `${worker_data[type_to_name[w.type]].emoji} Lv ${w.level} 💥 ${w.power.toFixed(2)}\n`;
   }
 
   string += `Top 3 Power: ${total.toFixed(2)}`;
