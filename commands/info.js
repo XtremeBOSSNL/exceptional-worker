@@ -58,7 +58,7 @@ module.exports.run = async (bot, msg, args) => {
       },
       {
         name:"Unique Raid Solutions",
-        value:`${raidcount} (52884)`,
+        value:`${raidcount} (137665)`,
         inline:true,
       },
       {

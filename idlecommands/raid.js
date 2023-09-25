@@ -175,7 +175,7 @@ function get_worker_string(workers) {
 }
 
 function get_power (type, level) {
-  return (type + 2) * (1 + type/4) * (1 + level/2.5);
+  return (type + 2) * (1 + type/3.25) * (1 + level/1.25);
 }
 
 function get_order (value, enemy) {

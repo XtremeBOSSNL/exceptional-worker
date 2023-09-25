@@ -512,7 +512,7 @@ function guild_help(bot, guild, msg, args) {
 }
 
 function get_power (type, level) {
-  return (type + 2) * (1 + type/4) * (1 + level/2.5);
+  return (type + 2) * (1 + type/3.25) * (1 + level/1.25);
 }
 
 module.exports.help = {

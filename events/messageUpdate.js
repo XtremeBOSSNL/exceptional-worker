@@ -9,7 +9,7 @@ const prefix = 'ew ';
 module.exports = {
   name: Events.MessageUpdate,
   async execute(bot, oldmsg, msg) {
-    if (msg.channel.id != "1134062576226013275" && process.env.STATE == "DEVELOPMENT") return;
+    if (msg.channel.id != "1150857221832441946" && process.env.STATE == "DEVELOPMENT") return;
     if (msg.author.id == "1085406806492319784") idle_handler(bot, msg, oldmsg);
   },
 };
