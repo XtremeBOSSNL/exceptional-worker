@@ -6,7 +6,7 @@ class Worker {
     constructor(type, level) {
         this.type = type;
         this.level = level;
-        this.power = (type + 2) * (1 + type/4) * (1 + level/2.5);
+        this.power = (type + 2) * (1 + type/3.25) * (1 + level/1.25);
     }
 
     getPower() {
@@ -26,6 +26,7 @@ class Farm {
         let dmg = Math.round(80 * power / (this.worker?.power || 1));
         this.hp -= dmg;
         if (this.hp < 0) this.hp = 0;
+        console.log(`atk power ${power}, def power ${this.worker?.power}, hp left ${this.hp}`);
         return this.hp;
     }
 }
@@ -43,7 +44,7 @@ class Raid {
         this.max_hp = hp;
     }
 
-    simulate() {
+    simulate(verbose) {
         for(let i = 0; i < this.atk.length; i++) {
             let a = this.atk[i];
             let d = this.def[this.current_defender];
@@ -54,6 +55,7 @@ class Raid {
             if (hp == 0) {
                 this.current_defender++;
             }
+            if (verbose) console.log(`Turn ${i+1} - ${names[a.type]} Lv ${a.level} Hits ${names[d.worker.type]} Lv ${d.worker.level} leaving the farm at ${hp} hp`);
         }
         return [this.current_defender, this.def[this.current_defender]?.hp || 0];
     }
@@ -98,9 +100,10 @@ class RaidSolver {
         return [this.best_score, this.best_solution, this.best_hp_left, this.stats];
     }
 
-    doRaid(atk) {
+    doRaid(atk, verbose) {
+        if (!verbose) verbose = 0;
         let raid = new Raid(atk, this.def, this.hp);
-        let score = raid.simulate();
+        let score = raid.simulate(verbose);
         this.stats.count++;
         this.stats[score[0].toFixed(0)] = (this.stats[score[0].toFixed(0)] || 0) + 1;
         if ((score[0] == this.best_score && score[1] < this.best_hp_left) || (score[0] > this.best_score)) {
@@ -110,5 +113,7 @@ class RaidSolver {
         }
     }
 }
+
+const names = ['None', 'Useless', 'Deficient', 'Common', 'Talented', 'Wise', 'Expert', 'Masterful'];
 
 module.exports = {RaidSolver};
