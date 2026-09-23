@@ -35,10 +35,12 @@ async function energy_check (bot) {
 
   console.log(`${users.length} energy reminders ready`);
   for (let i = 0; i<users.length;i++) {
-    let channel = await bot.channels.fetch(users[i].channel, {allowUnkownGuild:true, force:true}).catch(err=>console.log(err));
-    await channel.send({content:`<@${users[i].user}> You're Energy is full`}).catch(err=>console.log(err)); 
+    // deactivate first so a reminder that can't be delivered isn't retried forever
     users[i].active = false;
-    users[i].save().catch(err=>console.log(err));
+    await users[i].save().catch(err=>console.log(err));
+    let channel = await bot.channels.fetch(users[i].channel, {allowUnkownGuild:true, force:true}).catch(err=>console.log(err));
+    if (!channel) continue;
+    await channel.send({content:`<@${users[i].user}> You're Energy is full`}).catch(err=>console.log(err)); 
   }
   return;
 }
@@ -48,16 +50,19 @@ async function claim_check (bot) {
 
   console.log(`${users.length} claim reminders ready`);
   for (let i = 0; i<users.length;i++) {
-    let channel = await bot.channels.fetch(users[i].channel, {allowUnkownGuild:true, force:true}).catch(err=>console.log(err));
-    await channel.send({content:`<@${users[i].user}> This is your claim reminder`}).catch(err=>console.log(err)); 
+    // deactivate first so a reminder that can't be delivered isn't retried forever
     users[i].active = false;
-    users[i].save().catch(err=>console.log(err));
+    await users[i].save().catch(err=>console.log(err));
+    let channel = await bot.channels.fetch(users[i].channel, {allowUnkownGuild:true, force:true}).catch(err=>console.log(err));
+    if (!channel) continue;
+    await channel.send({content:`<@${users[i].user}> This is your claim reminder`}).catch(err=>console.log(err)); 
   }
   return;
 }
 
 async function get_member_by_username(guild, username, strict) {
   let members = await guild.members.fetch({query:username, limit:99}).catch(err=>console.log(err));
+  if (!members) return undefined;
   let member = strict ? undefined : members.first();
   if (strict || members.size > 1) {
     let found = members.find(x => x.user.username === username);
