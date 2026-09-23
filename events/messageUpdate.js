@@ -10,7 +10,7 @@ module.exports = {
   name: Events.MessageUpdate,
   async execute(bot, oldmsg, msg) {
     if (msg.channel.id != "1150857221832441946" && process.env.STATE == "DEVELOPMENT") return;
-    if (msg.author.id == "1085406806492319784") idle_handler(bot, msg, oldmsg);
+    if (msg.author.id == "1085406806492319784") idle_handler(bot, msg, oldmsg).catch(err=>console.log(err));
   },
 };
 
@@ -28,7 +28,7 @@ async function idle_handler(bot, msg, oldMsg) {
   } else if (author) {
     let name = /^(\w+)\s—\s/g.exec(author)?.[1] || undefined;
     if (name) {
-      let member = General.get_member_by_username(msg.guild, author, 1);
+      let member = await General.get_member_by_username(msg.guild, name, 1);
       if (member?.user?.id) {
         id = member.user.id;
       }
@@ -36,7 +36,7 @@ async function idle_handler(bot, msg, oldMsg) {
   } else {
     let footer = embed.data?.footer?.text;
     if (footer && footer.startsWith('Owner: ')) {
-      bot.idlecommands.get('guild list').run(bot, undefined, msg);
+      await bot.idlecommands.get('guild list')?.run(bot, undefined, msg);
     }
     let descr = embed.data?.description;
     if (!descr) return;
@@ -48,10 +48,12 @@ async function idle_handler(bot, msg, oldMsg) {
         command = bot.idlecommands.get(cmd);
       }
 
+      if (!command) return;
+
       try {
-        command.run(bot, {}, msg);
+        await command.run(bot, {}, msg);
       } catch (e) {
-        return;
+        console.log(e);
       }
       return;
     } else {
@@ -76,9 +78,11 @@ async function idle_handler(bot, msg, oldMsg) {
     command = bot.idlecommands.get(cmd);
   }
 
+  if (!command) return;
+
   try {
-    command.run(bot, us, msg, oldMsg);
+    await command.run(bot, us, msg, oldMsg);
   } catch (e) {
-    return;
+    console.log(e);
   }
 }
